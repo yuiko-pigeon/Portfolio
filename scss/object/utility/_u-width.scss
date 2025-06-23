@@ -1,0 +1,7 @@
+@use "../../foundation/global/index" as g;
+
+.u-width{
+    &__text{
+        width: 1.8rem;
+    }
+}

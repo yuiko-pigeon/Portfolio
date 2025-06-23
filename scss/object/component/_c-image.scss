@@ -1,0 +1,21 @@
+@use "../../foundation/global/index" as g;
+
+.c-image{
+    &__square{
+        display: block;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        width: 13.5rem;
+        height: 13.5rem;
+        max-height: 25rem;
+        max-width: 25rem;
+        @include g.tab{
+            width: 16.3rem;
+            height: 16.3rem;
+        }
+        @include g.pc{
+            max-height: none;
+            max-width: none;
+        }
+    }
+}

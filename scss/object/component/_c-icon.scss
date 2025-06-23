@@ -1,0 +1,19 @@
+@use "../../foundation/global/index" as g;
+
+.c-icon{
+    &__mobile{
+    font-size: 8rem;
+    color: g.$color-lightGray;
+    margin: 4rem;
+    }
+    &__git{
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+    &__link{
+        font-size: 1.5rem;
+        margin-right: 10px;
+        
+    }
+    
+}

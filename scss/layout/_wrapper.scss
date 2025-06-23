@@ -1,0 +1,36 @@
+@use "../foundation/global/index" as g;
+
+.l-wrapper{
+    display: grid;
+    background-color: g.$color-beige;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box; //box-sizing:inherit は、親要素のbox-sizingを継承する
+    position: fixed;
+    overflow-x: hidden;
+    min-height: 100vh;
+    grid-template-rows: 5rem 1fr 1.5rem;
+    grid-template-columns: 100%;
+    @include g.pc{
+        grid-template-rows: 13rem auto 1fr;
+    }
+    &::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../picture/background.webp");
+        background-size: contain;
+        background-position: center;
+        opacity: 0.55; // ← 擬似要素で背景画像だけが薄くなる！
+        z-index: -3;
+    }
+   &.fix{
+    overflow: hidden;
+    max-height: 100vh;
+   }
+}

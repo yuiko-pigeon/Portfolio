@@ -1,0 +1,31 @@
+@use "../../foundation/global/index" as g;
+
+
+.p-footer{
+    &__text{
+        display: block;
+        color: g.$color-black;
+        @include g.sp{
+            font-size: 1.125rem;//18px
+        }
+        @include g.tab{
+            font-size:1.25rem;
+        }        
+    }
+    &__copyright{
+        display: block;
+        width: 30%;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 0.81rem;
+        height: 100%;
+        line-height: 1.5rem;
+        color: g.$color-black;
+    }
+    &__solid{
+        display: block;
+        border-top: solid 1px g.$color-lightGray;
+        height: 100%;//%に?
+    }
+
+}

@@ -1,0 +1,12 @@
+@use "../../foundation/global/index" as g;
+
+.u-lineheight{
+    line-height: 1.485rem;//23.76px
+    &__large{
+        line-height: 2.5rem;
+        @include g.pc{
+            line-height: 3rem;
+        }
+    }
+}
+//HTMLではまだ全て使われていない。
