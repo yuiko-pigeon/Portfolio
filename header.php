@@ -58,7 +58,7 @@
                                     </div> 受講申込みだけナビとは別に作って背景枠ボックスごとリンクできるようにする。そして一番右に設置して、そこに合わせてflexboxを設置する?
                                 </li>
                             </ul> -->
-                        </nav>
-                    </div><!--header_link-->
-                </div>
-            </header> 
+                            </nav>
+                        </div><!--header_link-->
+                    </div>
+                </header> 

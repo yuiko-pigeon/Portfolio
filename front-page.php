@@ -10,22 +10,22 @@
                 <div  class="c-hamburger__button--area" id="js-hamburger-close">
                     <div class="c-hamburger__button--close" id="js-close-button"></div>
                 </div>
-                <div class="u-font">
+                <div class="">
                     <ul class="p-menu__menulist">
                         <li class="p-menu__list">
-                            <a href="#top" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> And 8 </a>
+                            <a href="<?php echo esc_url('/'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> And 8 </a>
                         </li>
                         <li class="p-menu__list">
-                            <a href="#service" class="c-link__hamburger js-menu-close"> Service </a>
+                            <a href="<?php echo esc_url('/#service'); ?>" class="c-link__hamburger js-menu-close"> Service </a>
                         </li>   
                         <li class="p-menu__list ">
-                            <a href="#works" class="c-link__hamburger js-menu-close"> Works </a>
+                            <a href="<?php echo esc_url('/#works'); ?>" class="c-link__hamburger js-menu-close"> Works </a>
                         </li>
                         <li class="p-menu__list">
-                            <a href="#profile" class="c-link__hamburger js-menu-close"> Profile </a>
+                            <a href="<?php echo esc_url('/#profile'); ?>" class="c-link__hamburger js-menu-close"> Profile </a>
                         </li>
                         <li class="p-menu__list">
-                            <a href="#contact" class="c-link__hamburger js-menu-close" >Contact </a> 
+                            <a href="<?php echo esc_url('/#contact'); ?>" class="c-link__hamburger js-menu-close" >Contact </a> 
                         </li>
                     </ul> 
                 </div>

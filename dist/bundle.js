@@ -39,7 +39,7 @@ if (wrapper && content) {
 } else {
   console.warn("ScrollSmoother elements(#js-wrapper or .js-fix.content-wrapper) not found, skipping initialization");
 }
-if (wpData.isFrontPage && hamburger && hamburgerClose && nav && closeButton) {
+if (hamburger && hamburgerClose && nav && closeButton) {
   tl.eventCallback("onComplete", () => {
     hamburger.style.borderRadius = "0";
   });
@@ -92,19 +92,92 @@ if (wpData.isFrontPage && hamburger && hamburgerClose && nav && closeButton) {
 } else {
   console.warn("Hamburger menu elements not found, skipping menu functionality");
 }
-gsap.utils.toArray('a[href^="#"]').forEach(function(a) {
-  a.addEventListener("click", function(e) {
-    e.preventDefault();
-    const target = a.getAttribute("href");
-    gsap.to(window, {
-      duration: 1,
-      ease: "power4.out",
-      scrollTo: {
-        y: target,
-        autoKill: false
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form.snow-monkey-form");
+  if (!form) {
+    console.log("フォームが見つかりません");
+    return;
+  }
+  if (form.getAttribute("data-screen") === "complete") {
+    document.querySelector(".is-style-contact-text").classList.add("none");
+  }
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "attributes" && mutation.attributeName === "data-screen") {
+        const currentScreen = form.getAttribute("data-screen");
+        console.log("data-screen変更検知:", currentScreen);
+        if (currentScreen === "complete") {
+          document.querySelector(".is-style-contact-text").classList.add("none");
+          console.log("complete状態を検知して非表示に");
+        } else {
+          document.querySelector(".is-style-contact-text").classList.remove("none");
+          console.log("completeじゃなくなったので表示に戻す");
+        }
       }
     });
   });
+  observer.observe(form, { attributes: true });
+});
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+const getSmoother = () => ScrollSmoother && ScrollSmoother.get();
+function revealHiddenContent(container) {
+  if (!container) return;
+  container.querySelectorAll(".p-slide__in:not(.is-animated)").forEach((el) => {
+    gsap.set(el, {
+      autoAlpha: 1,
+      y: 0
+    });
+    el.classList.add("is-animated");
+  });
+}
+gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href");
+    const hash = href.includes("#") ? "#" + href.split("#")[1] : null;
+    const target = hash ? document.querySelector(hash) : null;
+    const smoother2 = getSmoother();
+    if (target && smoother2) {
+      e.preventDefault();
+      smoother2.scrollTo(target, {
+        duration: 1.2,
+        ease: "power4.out"
+      });
+      revealHiddenContent(target);
+      if (menuOpen) {
+        nav.classList.remove("open");
+        fix.classList.remove("fix");
+        closeButton.classList.remove("is-appear");
+        tl.timeScale(1).reverse();
+        smoother2.paused(false);
+        menuOpen = false;
+      }
+    }
+  });
+});
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash;
+  const smoother2 = getSmoother();
+  if (hash && smoother2) {
+    window.scrollTo(0, 0);
+    smoother2.scrollTop(0);
+    const scrollToHash = () => {
+      const target = document.querySelector(hash);
+      if (target) {
+        smoother2.scrollTo(target, {
+          duration: 1.5,
+          ease: "power4.out"
+        });
+        revealHiddenContent(target);
+      } else if (scrollToHash.tryCount < 10) {
+        scrollToHash.tryCount++;
+        setTimeout(scrollToHash, 200);
+      }
+    };
+    scrollToHash.tryCount = 0;
+    setTimeout(scrollToHash, 300);
+  }
 });
 gsap.to(".p-hero__background", {
   backgroundColor: "rgba(188, 186, 186, 0.63)",
@@ -252,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (smoother2) smoother2.paused(false);
     }, 400);
   }
-  document.querySelectorAll(".js-open-modal").forEach((item) => {
+  document.querySelectorAll(".is-style-works-image img").forEach((item) => {
     console.log("クリックイベント登録:", item);
     item.addEventListener("click", (e) => {
       e.preventDefault();

@@ -1,0 +1,19 @@
+@use "../../foundation/global/index" as g;
+
+$block: 'is-style';
+
+.#{$block}-line-height{
+    line-height: 1.5rem;
+}
+
+.#{$block}-privacy{
+    display: block;
+    width: 85%;
+    align-items: center;
+    min-height: auto;
+    font-weight: 400;
+    margin:5rem auto;
+    @include g.pc{
+        width: 80%;
+    }
+}

@@ -1,0 +1,134 @@
+@use "../../foundation/global/index" as g;
+
+$block: 'is-style';
+
+.#{$block}-grid-works{
+    display: grid;
+    grid-template-columns: 1fr !important;
+    align-items: center;
+    width: 89.3%;
+    gap: 1.25rem;//20px
+    margin: 6rem auto 0 auto;
+    @include g.tab{
+    display: grid; 
+    width: 86.32%;
+    grid-template-columns: 1fr 1fr !important;
+    row-gap: 3.25rem;
+    column-gap: 1.25rem;
+    }
+    @include g.pc{
+        width: 85%;
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+}
+
+.#{$block}-grid-cell-works{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    place-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    position: relative;
+    z-index: 1000;
+}
+
+.#{$block}-works-image{ //JSもあり
+    >figure{
+        display: flex !important;
+        justify-content: center;
+        >img{
+            position: relative;
+            z-index: 99999999999999;
+            grid-row: 1/2;
+            width: 80%;
+            transition: 0.3s;
+            &:hover {
+                transform: scale(1.08);
+
+            cursor: pointer !important;
+            }
+        }   
+    }
+}
+
+.#{$block}-works-textarea{
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.7rem;
+}
+
+.#{$block}-work-heading{
+    grid-row: 2/3;
+    margin-top: 1rem;
+}
+
+.#{$block}-work-description{
+    line-height: 2.5rem;
+    margin: 0 5%;
+    text-align: center;
+}
+
+.#{$block}-icon-left
+>div{
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    &:link{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:visited{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:hover{
+        color: g.$color-black;
+        transform: scale(1.1);
+        text-decoration-color: g.$color-black;
+    }
+    &:focus{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:active{
+        color: g.$color-black;
+        text-decoration: none;
+    } 
+    >ul>li{
+        margin-right: 10px !important;
+    } 
+}
+
+.#{$block}-icon-right
+>div{
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    &:link{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:visited{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:hover{
+        color: g.$color-black;
+        transform: scale(1.1);
+        text-decoration-color: g.$color-black;
+    }
+    &:focus{
+        color: g.$color-black;
+        text-decoration: none;
+    }
+    &:active{
+        color: g.$color-black;
+        text-decoration: none;
+    } 
+    >ul>li{
+        margin-left: 10px !important;
+    } 
+}

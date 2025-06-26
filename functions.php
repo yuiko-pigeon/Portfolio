@@ -121,6 +121,32 @@ function modify_menu_item_output($item_output, $item, $depth, $args) {
 }
 add_filter('walker_nav_menu_start_el', 'modify_menu_item_output', 10, 4);
 
+//.is-style-works-image クラスを持つ画像ブロックに data-index を追加
+function add_data_index_to_img_in_works_block($block_content, $block) {
+    static $index = 0;
+
+    // 対象：core/image ブロックで、クラス名に is-style-works-image を含む
+    if (
+        isset($block['blockName']) &&
+        $block['blockName'] === 'core/image' &&
+        isset($block['attrs']['className']) &&
+        strpos($block['attrs']['className'], 'is-style-works-image') !== false
+    ) {
+        // <img>タグを探して data-index を挿入（すでについていなければ）
+        if (strpos($block_content, 'data-index=') === false) {
+            $block_content = preg_replace(
+                '/(<img[^>]*?)\/?>/',
+                '$1 data-index="' . $index . '" />',
+                $block_content,
+                1
+            );
+            $index++;
+        }
+    }
+
+    return $block_content;
+}
+add_filter('render_block', 'add_data_index_to_img_in_works_block', 10, 2);
 
 // カスタム投稿タイプにリビジョン追加
 function add_posttype_revisions() {
@@ -132,10 +158,24 @@ add_action('init', 'add_posttype_revisions');
 function custom_block_styles() {
     // 独自のブロックスタイルを登録する
     register_block_style(
+        'core/paragraph', // ブロック名
+        array(
+            'name'         => 'service-text', // スタイル名
+            'label'        => 'サービス上部のテキスト', // スタイルの表示名
+        )
+    );
+    register_block_style(
         'core/columns', // ブロック名
         array(
             'name'         => 'card-wrap', // スタイル名
             'label'        => 'serviceブロック全体', // スタイルの表示名
+        )
+    );
+    register_block_style(
+        'core/column', // ブロック名
+        array(
+            'name'         => 'card-price', // スタイル名
+            'label'        => 'priceブロック全体', // スタイルの表示名
         )
     );
     register_block_style(
@@ -169,7 +209,7 @@ function custom_block_styles() {
     register_block_style(
         'core/paragraph', // ブロック名
         array(
-            'name'         => 'service-centense', // スタイル名
+            'name'         => 'service-sentence', // スタイル名
             'label'        => 'サービスアイコン下の説明文', // スタイルの表示名
         )
     );
@@ -233,7 +273,7 @@ function custom_block_styles() {
     register_block_style(
         'core/image', // ブロック名
         array(
-            'name'         => 'works-image', // スタイル名
+            'name'         => 'works-image','js-open-modal', // スタイル名
             'label'        => '実績画像', // スタイルの表示名
         )
     );
@@ -301,5 +341,95 @@ function custom_block_styles() {
             'label'        => 'コンタクト上部のテキスト', // スタイルの表示名
         )
     );
+    register_block_style(
+        'core/group', // ブロック名
+        array(
+            'name'         => 'contact-form', // スタイル名
+            'label'        => 'コンタクトフォーム', // スタイルの表示名
+        )
+    );
+    //privacy
+    register_block_style(
+        'core/paragraph', // ブロック名
+        array(
+            'name'         => 'line-height', // スタイル名
+            'label'        => 'プライバシーポリシー行間', // スタイルの表示名
+        )
+    );
+    register_block_style(
+        'core/group', // ブロック名
+        array(
+            'name'         => 'privacy', // スタイル名
+            'label'        => 'privacyレイアウト', // スタイルの表示名
+        )
+    );
 }
 add_action( 'init', 'custom_block_styles' );
+
+// 
+//     // ブロック名 + 対象スタイル => 追加するクラス名の対応表
+//     $targets = [
+//         'core/paragraph' => [
+//             'is-style-service-text' => 'p-slide__in',
+//             'is-style-profile-text-1' => 'p-slide__in',
+//             'is-style-profile-text-2' => 'p-slide__in',
+//             'is-style-contact-text' => 'p-slide__in',
+//         ],
+//         'core/image' => [
+//             'is-style-profile' => 'p-slide__in',
+//         ],
+//         'core/group' => [
+//             'is-style-grid-cell-works' => 'p-slide__in',
+//             'is-style-contact-form' => 'p-slide__in',
+//         ],
+//         'core/column' => [
+//             'is-style-card-left' => 'p-slide__in',
+//             'is-style-card-center' => 'p-slide__in',
+//             'is-style-card-right' => 'p-slide__in',
+//             'is-style-card-price' => 'p-slide__in',
+//         ],
+//         // 必要に応じて追加
+//     
+
+    function add_slide_in_class( $block_content, $block ) {
+        if ( ! isset( $block['attrs']['className'] ) ) return $block_content;
+    
+        // 対象のスタイルが含まれているか（例：is-style-）
+        $style_keywords = [
+        'is-style-contact-text',
+        'is-style-service-text',
+        'is-style-profile-text-1',
+        'is-style-profile-text-2',
+        'is-style-card-left',
+        'is-style-card-right',
+        'is-style-card-center',
+        'is-style-card-price',
+        'is-style-grid-cell-works',
+        'is-style-contact-form',
+        'is-style-profile',
+    ];
+        $matched = false;
+    
+        foreach ( $style_keywords as $keyword ) {
+            if ( strpos( $block['attrs']['className'], $keyword ) !== false ) {
+                $matched = true;
+                break;
+            }
+        }
+    
+        if ( $matched ) {
+            // すでに p-slide__in が入っていないかチェック
+            if ( strpos( $block_content, 'p-slide__in' ) === false ) {
+                // class="..." に p-slide__in を追加
+                $block_content = preg_replace(
+                    '/class="([^"]*)"/',
+                    'class="$1 p-slide__in"',
+                    $block_content,
+                    1
+                );
+            }
+        }
+    
+        return $block_content;
+    }
+    add_filter( 'render_block', 'add_slide_in_class', 10, 2 );

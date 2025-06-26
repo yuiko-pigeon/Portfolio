@@ -1,6 +1,5 @@
 //foundation
 @use "foundation/global";
-@use "foundation/base";
 @use "foundation/reset";
 
 //layouut
@@ -23,8 +22,12 @@
 @use "object/component/c-label";
 
 //project
-@use "object/project/p-article";
-@use "object/project/p-block-style";
+@use "object/project/p-block-style-service";
+@use "object/project/p-block-style-contact";
+@use "object/project/p-block-style-works";
+@use "object/project/p-block-style-profile";
+@use "object/project/p-block-style-privacy";
+@use "object/project/p-page404";
 @use "object/project/p-hero";
 @use "object/project/p-footer";
 @use "object/project/p-menu";;

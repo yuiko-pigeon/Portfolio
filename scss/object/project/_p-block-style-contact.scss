@@ -1,0 +1,207 @@
+@use "../../foundation/global/index" as g;
+
+$block: 'is-style';
+
+.#{$block}-contact-text{
+    width:80.3%;
+    display: block;
+    margin: 5rem auto;
+    line-height: 2.5rem;
+    font-family: g.$fontMp;
+    @include g.tab{
+        text-align: center;
+    }
+}
+
+.none{
+    display: none !important;
+}
+
+.smf-progress-tracker{
+    margin: 9rem auto 0 auto;
+    width: 80vw;
+    @include g.pc{width: 44vw;
+    }
+}
+
+.smf-form{
+    display: flex;
+    flex-direction: column;
+    width: 80.3%;
+    row-gap: 1rem;
+    margin:5rem auto;
+    font-size: 1.2rem;
+    color: g.$color-black;
+    line-height: 2.78rem;
+    font-weight: g.$bold;
+    font-family: g.$fontMp;
+    @include g.tab{
+        font-size: 1.52rem;
+        width: 36.5rem;
+        max-width: 89.3%;
+    }
+}
+
+.smf-item__label{
+    margin-bottom: 1rem;
+    &__text{
+        position: relative;
+        &::after{
+            content: '必須';
+            color: g.$color-red;
+            position: absolute;
+            top: 50%;
+            right: -30%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.wp-block-snow-monkey-forms-item:nth-child(3) .smf-item__label__text::after{
+    display: none;
+}
+
+.wp-block-snow-monkey-forms-item:nth-child(5) .smf-item__label__text::after{
+    top: 50%;
+    right: -17%;
+    transform: translateY(-50%);
+}
+
+[data-screen="confirm"] .input_txt {
+    display: none;
+}
+
+.smf-text-control__control{
+    width: 100%;
+    height: 2.03rem;
+}
+
+.smf-textarea-control__control{
+    width: 100%;
+    height: 26rem;
+}
+
+.smf-checkboxes-control__control{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.smf-checkbox-control{
+    align-items: center !important;
+    &__control {
+        margin-top: 0 !important;
+    }
+}
+
+.smf-checkbox-control__label{
+    font-size: 1rem !important;
+}
+
+.smf-action{//
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    //width: 80.3%;
+    @include g.tab{display: flex;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        //width: 36.5rem;
+        //max-width: 89.3%;
+    }
+}
+
+.smf-button-control{
+    width: 100%;
+    margin: 0 !important;
+}
+
+.smf-button-control__control[data-action="confirm"]
+{
+    display: flex !important;
+    justify-content: center;
+    margin: 2.5rem auto 15rem auto;
+    padding: 0.5rem;
+    background-color: g.$color-lightGrayT;
+    color: g.$color-black;
+    font-size: 1rem;
+    border: solid 0.15px g.$color-gray !important;
+    border-radius: 4px !important;
+    width: 18% !important;
+    //width: clamp(4rem,28%,6rem);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: g.$fontMp;
+    &:hover {
+      background-color: g.$color-grayT !important;
+      color: g.$color-darkBlack !important;
+      background-image: none;
+    }
+}
+
+.smf-button-control__control[data-action="complete"]
+{
+    display: flex !important;
+    justify-content: center;
+    width: 27% !important;
+    margin: 2.5rem auto 1rem auto;
+    padding: 0.5rem;
+    background-color: g.$color-lightGrayT;
+    color: g.$color-black;
+    font-size: 1rem;
+    border: solid 0.15px g.$color-gray !important;
+    border-radius: 4px !important;
+    //width: clamp(4rem,28%,6rem);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: g.$fontMp;
+    &:hover {
+      background-color: g.$color-grayT !important;
+      color: g.$color-darkBlack !important;
+      background-image: none;
+    }
+    @include g.tab {
+        margin: 2.5rem auto 15rem 1rem;
+    }
+}
+
+.smf-button-control__control[data-action="back"]
+{
+    display: flex !important;
+    justify-content: center;
+    width: 18% !important;
+    margin: 2.5rem auto 15rem auto;
+    padding: 0.5rem;
+    background-color: g.$color-lightGrayT;
+    color: g.$color-black;
+    font-size: 1rem;
+    border: solid 0.15px g.$color-gray !important;
+    border-radius: 4px !important;
+    //width: clamp(4rem,28%,6rem);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: g.$fontMp;
+    &:hover {
+      background-color: g.$color-grayT !important;
+      color: g.$color-darkBlack !important;
+      background-image: none;
+    }
+    @include g.tab {
+        margin: 2.5rem 1rem 15rem auto;
+    }
+}
+
+.smf-error-messages{
+    font-family: g.$fontMp;
+    font-size: 1rem;
+}
+
+.smf-placeholder{
+    font-weight: g.$Mbold;
+}
+
+.smf-complete-content{
+    margin-bottom: 14rem;
+}

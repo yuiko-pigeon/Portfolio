@@ -14,12 +14,15 @@
     &__contents{
         font-size: clamp(3.75rem,6vw,6.2rem);
     }
+    &__contents--privacy{
+        font-size: clamp(0.8rem,3vw,6.2rem);
+    }
     &__card{
         font-size: clamp(3.125rem,4vw,6.2rem);
         color: g.$color-gray;
     }
     &__grid{
-        font-size: １rem;
+        font-size: 1rem;
         color: g.$color-black;
     }
     &__grid--works{

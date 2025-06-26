@@ -31,7 +31,7 @@
                 <div class="p-smooth__background" id="js-smooth">
                     <main  class="l-main l-main__font">
                         <div class="p-hero">
-                            <img src="./picture/flowerbackground.webp" alt="" class="p-hero__background--image">
+                            <img src="./picture/flowerbackground.webp" alt="白い花瓶に白い花" class="p-hero__background--image">
                             <div class="p-hero__background"></div>
                             <p class="c-title__hero p-title__hero" id="js-title-hero"><span data-lag="0.08">Beyond the visible.Living code behind design.</span></p>
                         </div>
@@ -175,7 +175,7 @@
                                             事業内容 ：コーディング　WordPress構築/テーマ開発 <br>
                                             <br>
                                             鈴木 結子　Yuiko Suzuki<br>
-                                            GitHub:　X:
+                                            X:
                                         </p>
                                     </figcaption>
                                 </figure>
