@@ -4,6 +4,7 @@ add_theme_support( 'title-tag' );
 add_theme_support('post-thumbnails');
 add_theme_support('automatic-feed-links');
 add_theme_support( 'custom-logo' );
+add_theme_support( 'custom-background');
 
 //CSSファイルの読み込み ress.cssの後にstyle.cssを読み込む
 function my_enqueue_assets(){

@@ -79,6 +79,7 @@
         position: absolute;
         left: 0;
         top: 1rem;
+        height: auto;
         width: clamp(1rem, 66vw, 18rem);
         @include g.tab{
             left: 1rem;

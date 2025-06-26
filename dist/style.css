@@ -1809,6 +1809,7 @@ input, select {
   position: absolute;
   left: 0;
   top: 1rem;
+  height: auto;
   width: clamp(1rem, 66vw, 18rem);
 }
 @media screen and (min-width: 781px) {
