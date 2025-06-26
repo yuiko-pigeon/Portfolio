@@ -3,6 +3,7 @@
 add_theme_support( 'title-tag' );
 add_theme_support('post-thumbnails');
 add_theme_support('automatic-feed-links');
+add_theme_support( 'custom-logo' );
 
 //CSSファイルの読み込み ress.cssの後にstyle.cssを読み込む
 function my_enqueue_assets(){
@@ -23,6 +24,17 @@ function my_enqueue_assets(){
 }
 add_action('wp_enqueue_scripts','my_enqueue_assets');
 
+//タイトルに詳細を非表示
+function rewrite_title($title) {
+    if (is_front_page()) {
+        $title['tagline'] = '';//ここで非表示
+      }
+    return $title;
+    }
+  add_filter('document_title_parts', 'rewrite_title');
+
+  
+
 //pタグを自動挿入しない
 remove_filter('the_content','wpautop');
 
@@ -33,6 +45,21 @@ add_action('after_setup_theme',function(){
         'header' => 'ヘッダーのメニュー'
     ));
 });
+
+function my_theme_setup() {
+    add_theme_support( 'html5', array(
+        'search-form',
+        'gallery',
+        'caption',
+    ) );
+    add_theme_support( 'custom-logo',array(
+        'height'      => 109,       
+        'width'       => 347,       
+        'flex-height' => true,      // 高さの柔軟対応
+        'flex-width'  => true,      // 幅の柔軟対応
+        ) );
+}
+add_action( 'after_setup_theme', 'my_theme_setup' );
 
 //同じカウントをclass名追加で利用
 $menu_item_counter = 0;

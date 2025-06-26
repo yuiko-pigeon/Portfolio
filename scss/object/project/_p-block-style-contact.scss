@@ -205,3 +205,29 @@ $block: 'is-style';
 .smf-complete-content{
     margin-bottom: 14rem;
 }
+
+.smf-item__description>a{
+    cursor: pointer;
+    &:link{
+        color: g.$color-blue;
+        text-decoration: none;
+        text-decoration: underline;
+    }
+    &:visited{
+        color: g.$color-blue;
+        text-decoration: none;
+    }
+    &:hover{
+        color: g.$color-blue;
+        text-decoration: underline;
+        text-decoration-color: g.$color-black;
+    }
+    &:focus{
+        color: g.$color-blue;
+        text-decoration: none;
+    }
+    &:active{
+        color: g.$color-blue;
+        text-decoration: none;
+    } 
+}

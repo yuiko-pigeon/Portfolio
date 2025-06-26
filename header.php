@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php bloginfo('description'); ?>">
     <meta name="keywords" content="Web制作, フリーランス, WordPress, ホームページ, サイト, コーディング, 名古屋, コーディング, ワードプレス, 安い, 丁寧, 安心">
-    <title>and8</title>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> class="js-fix"  id="top">
@@ -16,7 +15,17 @@
                     <div class="p-header__inner" >
                         <div class="u-text__small p-header__title">
                             <h1 class="p-header__logo--area">
-                            <img src="<?php echo get_theme_file_uri( 'picture/logo2.webp' ); ?>" class="lazyload p-header__logo" alt="ロゴ：and 8">
+                            <?php if ( function_exists( 'get_custom_logo' ) ) {
+                                    $logo_html = get_custom_logo();
+
+                                    if ( $logo_html ) {
+                                        // WordPressが自動で出力する class="custom-logo" を、自分の好きなクラス名に置き換える
+                                        echo str_replace( 'class="custom-logo"', 'class="p-header__logo"', $logo_html );
+                                    } else {
+                                        // カスタムロゴが未設定の場合はデフォルト画像を表示
+                                        echo '<img src="' . esc_url( get_theme_file_uri( 'picture/logo2.webp' ) ) . '" class="p-header__logo" alt="and 8 ロゴ">';
+                                    }
+                                } ?>
                             </h1>
                         </div>
                         <div class="header_link p-header__nav">
