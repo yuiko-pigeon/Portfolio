@@ -93,25 +93,29 @@ if (hamburger && hamburgerClose && nav && closeButton) {
   console.warn("Hamburger menu elements not found, skipping menu functionality");
 }
 document.addEventListener("DOMContentLoaded", () => {
+  var _a;
   const form = document.querySelector("form.snow-monkey-form");
   if (!form) {
     console.log("フォームが見つかりません");
     return;
   }
-  if (form.getAttribute("data-screen") === "complete") {
-    document.querySelector(".is-style-contact-text").classList.add("none");
+  const initialScreen = form.getAttribute("data-screen");
+  if (initialScreen === "complete" || initialScreen === "systemerror") {
+    (_a = document.querySelector(".is-style-contact-text")) == null ? void 0 : _a.classList.add("none");
   }
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.type === "attributes" && mutation.attributeName === "data-screen") {
         const currentScreen = form.getAttribute("data-screen");
         console.log("data-screen変更検知:", currentScreen);
-        if (currentScreen === "complete") {
-          document.querySelector(".is-style-contact-text").classList.add("none");
-          console.log("complete状態を検知して非表示に");
+        const targetText = document.querySelector(".is-style-contact-text");
+        if (!targetText) return;
+        if (currentScreen === "complete" || currentScreen === "systemerror") {
+          targetText.classList.add("none");
+          console.log(`${currentScreen} 状態を検知して非表示に`);
         } else {
-          document.querySelector(".is-style-contact-text").classList.remove("none");
-          console.log("completeじゃなくなったので表示に戻す");
+          targetText.classList.remove("none");
+          console.log(`${currentScreen} 状態なので表示に戻す`);
         }
       }
     });

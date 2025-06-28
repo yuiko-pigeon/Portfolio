@@ -14,7 +14,7 @@
                 <div class="">
                     <ul class="p-menu__menulist">
                         <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> And 8 </a>
+                            <a href="<?php echo esc_url('/#top'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> TOP </a>
                         </li>
                         <li class="p-menu__list">
                             <a href="<?php echo esc_url('/#service'); ?>" class="c-link__hamburger js-menu-close"> Service </a>

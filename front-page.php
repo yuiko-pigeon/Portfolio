@@ -13,7 +13,7 @@
                 <div class="">
                     <ul class="p-menu__menulist">
                         <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> And 8 </a>
+                            <a href="<?php echo esc_url('/#top'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> TOP </a>
                         </li>
                         <li class="p-menu__list">
                             <a href="<?php echo esc_url('/#service'); ?>" class="c-link__hamburger js-menu-close"> Service </a>
@@ -35,7 +35,7 @@
             <div id="smooth-content">
                 <div class="p-smooth__background" id="js-smooth">
                     <main  class="l-main l-main__font">
-                        <div class="p-hero">
+                        <div class="p-hero" id="hero">
                             <img src="<?php echo get_theme_file_uri( 'picture/flowerbackground.webp' ); ?>" alt="白い一輪挿しに入った白い花の写真" class="p-hero__background--image">
                             <div class="p-hero__background"></div>
                             <p class="c-title__hero p-title__hero" id="js-title-hero"><span data-lag="0.08">Beyond the visible.Living code behind design.</span></p>

@@ -1,0 +1,29 @@
+@use "../../foundation/global/index" as g;
+
+
+.wp-caption {
+    max-width: 100%;
+    margin: 1em auto;
+    text-align: center;
+  }
+  
+  .wp-caption-text {
+    font-size: 0.9rem;
+    color: g.$color-gray;
+    margin-top: 0.5em;
+  }
+
+  .sticky {
+    border: 2px solid g.$color-gray;
+    background-color: g.$color-gray;
+    padding: 1em;
+  }
+
+  .gallery-caption {
+    font-size: 0.85rem;
+    color: g.$color-gray;
+    text-align: center;
+    margin-top: 0.3em;
+  }
+
+  

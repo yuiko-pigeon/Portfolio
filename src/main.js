@@ -126,7 +126,7 @@ menuClose.forEach(function(close){
 
 
 
-//contactフォーム上部の文章を消す
+// contactフォーム上部の文章を消す
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form.snow-monkey-form');
 
@@ -136,8 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 初期チェック
-  if (form.getAttribute('data-screen') === 'complete') {
-    document.querySelector('.is-style-contact-text').classList.add('none');
+  const initialScreen = form.getAttribute('data-screen');
+  if (initialScreen === 'complete' || initialScreen === 'systemerror') {
+    document.querySelector('.is-style-contact-text')?.classList.add('none');
   }
 
   // 監視オブジェクト作成
@@ -148,21 +149,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mutation.attributeName === 'data-screen'
       ) {
         const currentScreen = form.getAttribute('data-screen');
-        console.log('data-screen変更検知:', currentScreen);  // ここを追加
-  
-        if (currentScreen === 'complete') {
-          document.querySelector('.is-style-contact-text').classList.add('none');
-          console.log('complete状態を検知して非表示に');
+        console.log('data-screen変更検知:', currentScreen);
+
+        const targetText = document.querySelector('.is-style-contact-text');
+        if (!targetText) return;
+
+        if (currentScreen === 'complete' || currentScreen === 'systemerror') {
+          targetText.classList.add('none');
+          console.log(`${currentScreen} 状態を検知して非表示に`);
         } else {
-          document.querySelector('.is-style-contact-text').classList.remove('none');
-          console.log('completeじゃなくなったので表示に戻す');
+          targetText.classList.remove('none');
+          console.log(`${currentScreen} 状態なので表示に戻す`);
         }
       }
     });
   });
+
   // 監視スタート
   observer.observe(form, { attributes: true });
 });
+
 
 // ブラウザの自動スクロールを止める
 if ('scrollRestoration' in history) {

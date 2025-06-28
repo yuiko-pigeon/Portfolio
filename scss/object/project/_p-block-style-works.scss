@@ -132,3 +132,10 @@ $block: 'is-style';
         margin-left: 10px !important;
     } 
 }
+
+#works .wp-block-spacer{
+    display: none;
+    @include g.pc{
+        display: block;
+    }
+}

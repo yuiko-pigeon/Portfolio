@@ -209,9 +209,11 @@ input, select {
 }
 .c-title__contents {
   font-size: clamp(3.75rem, 6vw, 6.2rem);
+  font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .c-title__contents--privacy {
   font-size: clamp(0.8rem, 3vw, 6.2rem);
+  font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .c-title__card {
   font-size: clamp(3.125rem, 4vw, 6.2rem);
@@ -701,6 +703,7 @@ input, select {
   margin: 5rem auto 1.5%;
   line-height: 2.5rem;
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
+  text-align: left;
 }
 @media screen and (min-width: 781px) {
   .is-style-service-text {
@@ -845,6 +848,7 @@ input, select {
   margin: 5rem auto;
   line-height: 2.5rem;
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
+  text-align: left;
 }
 @media screen and (min-width: 781px) {
   .is-style-contact-text {
@@ -1048,6 +1052,10 @@ input, select {
   margin-bottom: 14rem;
 }
 
+.smf-system-error-content {
+  margin: 0 auto 17rem;
+}
+
 .smf-item__description > a {
   cursor: pointer;
 }
@@ -1204,6 +1212,15 @@ input, select {
   margin-left: 10px !important;
 }
 
+#works .wp-block-spacer {
+  display: none;
+}
+@media screen and (min-width: 1200px) {
+  #works .wp-block-spacer {
+    display: block;
+  }
+}
+
 .is-style-grid-profile {
   display: grid;
   width: 85%;
@@ -1233,7 +1250,7 @@ input, select {
   max-width: 25rem;
   grid-row: 1/2;
   justify-self: center;
-  margin-bottom: 4.84rem;
+  margin: 0 auto 4.84rem;
   object-fit: cover;
   object-position: 50% 13%;
 }
@@ -1241,6 +1258,7 @@ input, select {
   .is-style-profile > img {
     width: 16.3rem;
     height: 16.3rem;
+    margin-bottom: 2.23rem;
   }
 }
 @media screen and (min-width: 1200px) {
@@ -1252,6 +1270,7 @@ input, select {
     grid-column: 1/2;
     margin-top: 4rem;
     margin-right: 20%;
+    margin-bottom: 4.84rem;
   }
 }
 
@@ -1260,6 +1279,7 @@ input, select {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
+  text-align: left;
 }
 @media screen and (min-width: 1200px) {
   .is-style-grid-profile-textarea-1 {
@@ -1295,6 +1315,11 @@ input, select {
 .is-style-profile-text-2 {
   font-size: 1.3rem;
   margin: 5rem auto;
+}
+@media screen and (min-width: 781px) {
+  .is-style-profile-text-2 {
+    margin: 0 auto;
+  }
 }
 @media screen and (min-width: 1200px) {
   .is-style-profile-text-2 {
@@ -1343,6 +1368,31 @@ input, select {
   .is-style-privacy {
     width: 80%;
   }
+}
+
+.wp-caption {
+  max-width: 100%;
+  margin: 1em auto;
+  text-align: center;
+}
+
+.wp-caption-text {
+  font-size: 0.9rem;
+  color: #707070;
+  margin-top: 0.5em;
+}
+
+.sticky {
+  border: 2px solid #707070;
+  background-color: #707070;
+  padding: 1em;
+}
+
+.gallery-caption {
+  font-size: 0.85rem;
+  color: #707070;
+  text-align: center;
+  margin-top: 0.3em;
 }
 
 .error404 .l-wrapper {
@@ -1622,6 +1672,7 @@ input, select {
   align-items: center;
   padding: 10rem 0;
   font-size: 2rem;
+  font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .p-menu__list {
   color: #3E3E3E;
@@ -1807,21 +1858,22 @@ input, select {
 }
 .p-header__logo {
   position: absolute;
-  left: 0;
+  left: 0.625rem;
   top: 1rem;
   height: auto;
   width: clamp(1rem, 66vw, 18rem);
 }
 @media screen and (min-width: 781px) {
   .p-header__logo {
-    left: 1rem;
-    top: 2rem;
+    left: 2rem;
+    top: 1.5rem;
   }
 }
 @media screen and (min-width: 1200px) {
   .p-header__logo {
-    top: -4rem;
-    width: auto;
+    left: 4rem;
+    top: -3.7rem;
+    width: clamp(1rem, 66vw, 24rem);
   }
 }
 .p-header__logo--area {
@@ -2193,6 +2245,15 @@ input, select {
   margin: 0 5%;
 }
 
+.u-br__tb {
+  display: inline-block;
+}
+@media screen and (min-width: 781px) {
+  .u-br__tb {
+    display: none;
+  }
+}
+
 .u-width__text {
   width: 1.8rem;
 }
@@ -2229,13 +2290,9 @@ input, select {
   font-size: 1.2rem;
 }
 
-.u-br__tb {
-  display: inline-block;
-}
-@media screen and (min-width: 781px) {
-  .u-br__tb {
-    display: none;
-  }
+.u-center__text {
+  display: flex;
+  justify-self: center;
 }
 
 .u-font {

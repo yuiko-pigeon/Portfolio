@@ -5,6 +5,10 @@ add_theme_support('post-thumbnails');
 add_theme_support('automatic-feed-links');
 add_theme_support( 'custom-logo' );
 add_theme_support( 'custom-background');
+add_theme_support( 'wp-block-styles' );
+add_theme_support( 'align-wide' );
+add_theme_support( 'editor-styles' ); //エディタースタイルを有効化
+
 
 //CSSファイルの読み込み ress.cssの後にstyle.cssを読み込む
 function my_enqueue_assets(){

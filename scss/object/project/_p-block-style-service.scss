@@ -7,6 +7,7 @@ $block: 'is-style';
     margin: 5rem auto 1.5%;
     line-height: 2.5rem;
     font-family: g.$fontMp;
+    text-align: left;
     @include g.tab{
         text-align: center;
         margin: 5rem auto 1%;

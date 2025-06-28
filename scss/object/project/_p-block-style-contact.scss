@@ -8,6 +8,7 @@ $block: 'is-style';
     margin: 5rem auto;
     line-height: 2.5rem;
     font-family: g.$fontMp;
+    text-align: left;
     @include g.tab{
         text-align: center;
     }
@@ -204,6 +205,10 @@ $block: 'is-style';
 
 .smf-complete-content{
     margin-bottom: 14rem;
+}
+
+.smf-system-error-content{
+    margin: 0 auto 17rem;
 }
 
 .smf-item__description>a{

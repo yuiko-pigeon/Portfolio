@@ -27,6 +27,7 @@
 @use "object/project/p-block-style-works";
 @use "object/project/p-block-style-profile";
 @use "object/project/p-block-style-privacy";
+@use "object/project/p-block-style";
 @use "object/project/p-page404";
 @use "object/project/p-hero";
 @use "object/project/p-footer";
@@ -47,6 +48,7 @@
 
 //utility
 @use "object/utility/u-margin";
+@use "object/utility/u-br";
 @use "object/utility/u-width";
 @use "object/utility/u-lineheight";
 @use "object/utility/u-padding";

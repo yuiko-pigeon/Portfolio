@@ -1,0 +1,10 @@
+@use "../../foundation/global/index" as g;
+
+.u-br{
+    &__tb{
+        display: inline-block;
+        @include g.tab{
+            display: none;
+        }
+    }
+}

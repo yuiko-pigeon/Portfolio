@@ -77,17 +77,18 @@
 
     &__logo{
         position: absolute;
-        left: 0;
+        left: 0.625rem;
         top: 1rem;
         height: auto;
         width: clamp(1rem, 66vw, 18rem);
         @include g.tab{
-            left: 1rem;
-            top: 2rem;
+            left: 2rem;
+            top: 1.5rem;
         }
         @include g.pc{
-            top: -4rem;
-            width: auto;
+            left: 4rem;
+            top: -3.7rem;
+            width: clamp(1rem, 66vw, 24rem);
         }
     }
 
