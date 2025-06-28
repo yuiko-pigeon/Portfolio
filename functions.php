@@ -47,7 +47,8 @@ remove_filter('the_content','wpautop');
 //サイドバーのウィジェットエリアを作成 「メニューの位置」に新しく項目を登録
 add_action('after_setup_theme',function(){
     register_nav_menus( array(
-        'header' => 'ヘッダーのメニュー'
+        'header' => 'ヘッダーのメニュー',
+        'hamburger' => 'ハンバーガーメニュー',
     ));
 });
 
@@ -152,6 +153,18 @@ function modify_menu_item_output($item_output, $item, $depth, $args) {
     return $item_output;
 }
 add_filter('walker_nav_menu_start_el', 'modify_menu_item_output', 10, 4);
+
+//hamburgerメニューのaタグにクラスを追加
+function add_menu_link_class($atts, $item, $args,$depth) {
+    
+    if (is_object($args) && isset($args->theme_location) && $args->theme_location === 'hamburger') {
+        if($depth==0){
+            $atts['class'] = 'c-link__hamburger js-menu-close';
+            }// １階層目　aタグにクラスを追加
+        }
+    return $atts;
+}
+add_filter('nav_menu_link_attributes', 'add_menu_link_class', 10, 4);
 
 //.is-style-works-image クラスを持つ画像ブロックに data-index を追加
 function add_data_index_to_img_in_works_block($block_content, $block) {
