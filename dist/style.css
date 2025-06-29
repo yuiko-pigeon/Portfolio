@@ -823,6 +823,10 @@ input, select {
   color: #707070;
 }
 
+.is-style-card-wrap {
+  position: relative;
+  z-index: 1;
+}
 @media screen and (min-width: 1200px) {
   .is-style-card-wrap {
     display: grid;
@@ -892,6 +896,7 @@ input, select {
 
 .smf-item__label {
   margin-bottom: 1rem;
+  font: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .smf-item__label__text {
   position: relative;
@@ -914,6 +919,7 @@ input, select {
   top: 50%;
   right: -17%;
   transform: translateY(-50%);
+  font: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 
 [data-screen=confirm] .input_txt {
@@ -970,13 +976,13 @@ input, select {
   display: flex !important;
   justify-content: center;
   margin: 2.5rem auto 15rem auto;
-  padding: 0.5rem;
+  padding: 0.5rem 0.85rem 0.5rem 1rem;
   background-color: rgba(188, 186, 186, 0.55);
   color: #3E3E3E;
   font-size: 1rem;
-  border: solid 0.15px #707070 !important;
+  border: solid 1px rgba(112, 112, 112, 0.78) 　 !important;
   border-radius: 4px !important;
-  width: 18% !important;
+  width: auto !important;
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
@@ -990,13 +996,13 @@ input, select {
 .smf-button-control__control[data-action=complete] {
   display: flex !important;
   justify-content: center;
-  width: 27% !important;
+  width: auto !important;
   margin: 2.5rem auto 1rem auto;
-  padding: 0.5rem;
+  padding: 0.5rem 2rem;
   background-color: rgba(188, 186, 186, 0.55);
   color: #3E3E3E;
   font-size: 1rem;
-  border: solid 0.15px #707070 !important;
+  border: solid 1px rgba(112, 112, 112, 0.78) !important;
   border-radius: 4px !important;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -1016,13 +1022,13 @@ input, select {
 .smf-button-control__control[data-action=back] {
   display: flex !important;
   justify-content: center;
-  width: 18% !important;
+  width: auto !important;
   margin: 2.5rem auto 15rem auto;
-  padding: 0.5rem;
+  padding: 0.5rem 1.5rem;
   background-color: rgba(188, 186, 186, 0.55);
   color: #3E3E3E;
   font-size: 1rem;
-  border: solid 0.15px #707070 !important;
+  border: solid 1px rgba(112, 112, 112, 0.78) !important;
   border-radius: 4px !important;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -1422,7 +1428,7 @@ input, select {
   text-transform: uppercase;
 }
 .error404 .p-page404__main {
-  margin: 10rem auto;
+  margin: 5rem auto 10rem;
   width: 83%;
 }
 .error404 .p-page404__title--area {
@@ -1457,6 +1463,31 @@ input, select {
   .error404 .p-page404__br--tb {
     display: block;
   }
+}
+.error404 .p-page404__link {
+  cursor: pointer;
+}
+.error404 .p-page404__link:link {
+  color: #2d5b8d;
+  text-decoration: none;
+  text-decoration: underline;
+}
+.error404 .p-page404__link:visited {
+  color: #2d5b8d;
+  text-decoration: none;
+}
+.error404 .p-page404__link:hover {
+  color: #2d5b8d;
+  text-decoration: underline;
+  text-decoration-color: #3E3E3E;
+}
+.error404 .p-page404__link:focus {
+  color: #2d5b8d;
+  text-decoration: none;
+}
+.error404 .p-page404__link:active {
+  color: #2d5b8d;
+  text-decoration: none;
 }
 .error404 .p-page404__link--bottom {
   display: contents;

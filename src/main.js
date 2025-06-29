@@ -179,66 +179,108 @@ if ('scrollRestoration' in history) {
 const getSmoother = () => ScrollSmoother && ScrollSmoother.get();
 
 // スライド要素を強制表示する関数
+// 強制表示関数も改善
 function revealHiddenContent(container) {
   if (!container) return;
 
-  container.querySelectorAll('.p-slide__in:not(.is-animated)').forEach(el => {
-    gsap.set(el, {
-      autoAlpha: 1,
-      y: 0,
-    });
-    el.classList.add('is-animated');
+  const elements = container.querySelectorAll('.p-slide__in:not(.is-animated)');
+  elements.forEach((el, index) => {
+    setTimeout(() => {
+      gsap.set(el, {
+        autoAlpha: 1,
+        y: 0,
+      });
+      el.classList.add('is-animated');
+    }, index * 50); // 少しずつ遅延させて自然に
   });
 }
 
-// スムーススクロール (クリック時も含む)
+let isMenuClosing = false; // スクロール禁止フラグ
+
 gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
     const hash = href.includes('#') ? '#' + href.split('#')[1] : null;
     const target = hash ? document.querySelector(hash) : null;
+
+    if (!target) return;
+
+    e.preventDefault();
+
+    // すでにメニュー閉じ処理中なら何もしない
+    if (isMenuClosing) return;
+
     const smoother = getSmoother();
 
-    if (target && smoother) {
-      e.preventDefault();
-      smoother.scrollTo(target, {
-        duration: 1.2,
-        ease: 'power4.out'
+    const performScroll = () => {
+      target.style.visibility = 'hidden';
+
+      const scrollDone = () => {
+        target.style.visibility = '';
+        revealHiddenContent(target);
+      };
+
+      if (smoother && !isMobile()) {
+        smoother.scrollTo(target, {
+          duration: 1.5,
+          ease: 'power4.out',
+          onComplete: scrollDone
+        });
+      } else {
+        setTimeout(() => {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+          setTimeout(scrollDone, 900);
+        }, 100); // 少し遅らせる
+      }
+    };
+
+    if (menuOpen) {
+      isMenuClosing = true;
+
+      nav.classList.remove('open');
+      fix.classList.remove('fix');
+      closeButton.classList.remove('is-appear');
+      if (smoother) smoother.paused(false);
+      menuOpen = false;
+
+      tl.eventCallback("onReverseComplete", () => {
+        isMenuClosing = false;
+        performScroll();
+        tl.eventCallback("onReverseComplete", null);
       });
 
-      revealHiddenContent(target); // ← ふわっと前に表示
-
-      // ハンバーガーが開いていたら閉じる
-      if (menuOpen) {
-        nav.classList.remove('open');
-        fix.classList.remove('fix');
-        closeButton.classList.remove('is-appear');
-        tl.timeScale(1).reverse();
-        smoother.paused(false);
-        menuOpen = false;
-      }
+      tl.timeScale(1).reverse();
+    } else {
+      performScroll();
     }
   });
 });
 
-// リロード後にふわっと移動
-window.addEventListener('DOMContentLoaded', () => {
+
+// リロード後のハッシュ移動
+window.addEventListener('load', () => {
   const hash = window.location.hash;
   const smoother = getSmoother();
 
-  if (hash && smoother) {
-    window.scrollTo(0, 0);        // ブラウザのスクロールを初期化
-    smoother.scrollTop(0);        // ScrollSmootherの位置もリセット
-
+  if (hash) {
     const scrollToHash = () => {
       const target = document.querySelector(hash);
       if (target) {
-        smoother.scrollTo(target, {
-          duration: 1.5,
-          ease: 'power4.out'
-        });
-        revealHiddenContent(target); // ← 読み込み時にも表示させる
-
+        if (smoother && !isMobile()) {
+          smoother.scrollTo(target, {
+            duration: 1.5,
+            ease: 'power4.out',
+          });
+        } else {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+        revealHiddenContent(target);
       } else if (scrollToHash.tryCount < 10) {
         scrollToHash.tryCount++;
         setTimeout(scrollToHash, 200);
@@ -248,6 +290,12 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(scrollToHash, 300);
   }
 });
+
+
+// モバイル判定関数（簡易版）
+function isMobile() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
 
 //gsap mainvisual
 gsap.to(".p-hero__background", { 
@@ -269,22 +317,25 @@ gsap.fromTo("#js-title-hero",{
     });
   
 //スクロールで要素をふわっと
-
 document.addEventListener("DOMContentLoaded", function () {
-    function onScroll() {
+  let isChecking = false;
+  
+  function onScroll() {
+    if (isChecking) return;
+    isChecking = true;
+    
+    requestAnimationFrame(() => {
       document.querySelectorAll(".p-slide__in").forEach(function (element) {
-        const sectionTop = element.getBoundingClientRect().top + window.scrollY;
-        const windowBottom = window.scrollY + window.innerHeight;
-  
-        if (element.classList.contains("is-animated")) return; // すでにアニメーション済みなら挙動をスキップ
-  
-        if (windowBottom > sectionTop + 100) {
+        if (element.classList.contains("is-animated")) return;
 
-  console.log("アニメーション実行", element);
+        const rect = element.getBoundingClientRect();
+        // より早めに検知：要素が画面下部に近づいたらアニメーション
+        if (rect.top < window.innerHeight + 100) {
+          console.log("アニメーション実行", element);
           gsap.to(element,{
               y: 0,
-              delay: 0.5,
-              duration: 2,
+              delay: 0.2,
+              duration: 1.5,
               autoAlpha: 1,
               ease: "power4.out"
             }
@@ -292,11 +343,44 @@ document.addEventListener("DOMContentLoaded", function () {
           element.classList.add("is-animated");
         }
       });
-    }
+      isChecking = false;
+    });
+  }
+
+  // 初回チェック
+  setTimeout(onScroll, 500);
   
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-  });
+  // ScrollSmootherのスクロールイベントも取得
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    // ScrollSmootherのコンテナに直接イベントを追加
+    const smoothContent = document.querySelector('#smooth-content');
+    if (smoothContent) {
+      smoothContent.addEventListener("scroll", onScroll, { passive: true });
+    }
+    
+    // ScrollTriggerでも検知
+    ScrollTrigger.create({
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: onScroll,
+      onRefresh: onScroll
+    });
+  }
+  
+  // 通常のスクロールイベント（保険）
+  window.addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("scroll", onScroll, { passive: true });
+  
+  // モバイル対応：各種タッチイベント
+  window.addEventListener("touchend", onScroll, { passive: true });
+  window.addEventListener("touchmove", onScroll, { passive: true });
+  window.addEventListener("touchstart", () => setTimeout(onScroll, 50), { passive: true });
+  
+  // 定期チェック（最後の砦）
+  setInterval(onScroll, 300);
+});
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded 発火！');
     

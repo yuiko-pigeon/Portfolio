@@ -11,24 +11,21 @@
                 <div  class="c-hamburger__button--area" id="js-hamburger-close">
                     <div class="c-hamburger__button--close" id="js-close-button"></div>
                 </div>
-                <div class="">
-                    <ul class="p-menu__menulist">
-                        <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/'); ?>" class="c-link__hamburger js-menu-close" aria-label="And 8のホームへ"> TOP </a>
-                        </li>
-                        <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/#service'); ?>" class="c-link__hamburger js-menu-close"> Service </a>
-                        </li>   
-                        <li class="p-menu__list ">
-                            <a href="<?php echo esc_url('/#works'); ?>" class="c-link__hamburger js-menu-close"> Works </a>
-                        </li>
-                        <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/#profile'); ?>" class="c-link__hamburger js-menu-close"> Profile </a>
-                        </li>
-                        <li class="p-menu__list">
-                            <a href="<?php echo esc_url('/#contact'); ?>" class="c-link__hamburger js-menu-close" >Contact </a> 
-                        </li>
-                    </ul> 
+                <div>
+                    <?php if (has_nav_menu('hamburger')) : ?>
+                    <?php wp_nav_menu( array(
+                        'menu' => '',
+                        'container'=> false, //自動でulを囲うdivを消す
+                        'menu_class' => 'p-menu__menulist',//ulクラス
+                        'fallback_cb' => false, 
+                        'echo' => true,
+                        'depth' => 1,
+                        'theme_location' => 'hamburger',
+                        'item_spacing' => 'false'
+                    )); ?>
+                    <?php else : ?>
+                        <p class="p-menu__menulist">メニューはまだ設定されていません。</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>

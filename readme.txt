@@ -93,7 +93,9 @@ SCSS（Sass）でのFLOCSS設計、そしてVite + Node.js + npm を使って、
     │   ├─ flowerbackground.webp                # ヒーロ画像
     │   ├─ hamburger-description.webp           # 実績画像　ポートフォリオ
     │   ├─ hamburger.webp                       # 実績画像　ハンバーガーサイト（架空）
+    │   ├─ logo.png                             # ロゴ画像メイン
     │   ├─ logo2.webp                           # ロゴ画像
+    │   ├─ favicon.png                          # ファビコン画像
     │   ├─ portfolio-description.webp           # 実績詳細　モーダル用
     │   ├─ portfolio.webp                       # 実績詳細　モーダル用
     │   └─ profile.webp                         # プロフィール写真

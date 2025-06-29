@@ -117,6 +117,8 @@ $block: 'is-style';
     color: g.$color-gray;
   }
 .#{$block}-card-wrap{
+    position: relative;
+    z-index: 1;
     @include g.pc{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

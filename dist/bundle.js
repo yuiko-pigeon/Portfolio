@@ -128,51 +128,85 @@ if ("scrollRestoration" in history) {
 const getSmoother = () => ScrollSmoother && ScrollSmoother.get();
 function revealHiddenContent(container) {
   if (!container) return;
-  container.querySelectorAll(".p-slide__in:not(.is-animated)").forEach((el) => {
-    gsap.set(el, {
-      autoAlpha: 1,
-      y: 0
-    });
-    el.classList.add("is-animated");
+  const elements = container.querySelectorAll(".p-slide__in:not(.is-animated)");
+  elements.forEach((el, index) => {
+    setTimeout(() => {
+      gsap.set(el, {
+        autoAlpha: 1,
+        y: 0
+      });
+      el.classList.add("is-animated");
+    }, index * 50);
   });
 }
+let isMenuClosing = false;
 gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
   link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
     const hash = href.includes("#") ? "#" + href.split("#")[1] : null;
     const target = hash ? document.querySelector(hash) : null;
+    if (!target) return;
+    e.preventDefault();
+    if (isMenuClosing) return;
     const smoother2 = getSmoother();
-    if (target && smoother2) {
-      e.preventDefault();
-      smoother2.scrollTo(target, {
-        duration: 1.2,
-        ease: "power4.out"
-      });
-      revealHiddenContent(target);
-      if (menuOpen) {
-        nav.classList.remove("open");
-        fix.classList.remove("fix");
-        closeButton.classList.remove("is-appear");
-        tl.timeScale(1).reverse();
-        smoother2.paused(false);
-        menuOpen = false;
+    const performScroll = () => {
+      target.style.visibility = "hidden";
+      const scrollDone = () => {
+        target.style.visibility = "";
+        revealHiddenContent(target);
+      };
+      if (smoother2 && !isMobile()) {
+        smoother2.scrollTo(target, {
+          duration: 1.5,
+          ease: "power4.out",
+          onComplete: scrollDone
+        });
+      } else {
+        setTimeout(() => {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+          setTimeout(scrollDone, 900);
+        }, 100);
       }
+    };
+    if (menuOpen) {
+      isMenuClosing = true;
+      nav.classList.remove("open");
+      fix.classList.remove("fix");
+      closeButton.classList.remove("is-appear");
+      if (smoother2) smoother2.paused(false);
+      menuOpen = false;
+      tl.eventCallback("onReverseComplete", () => {
+        isMenuClosing = false;
+        performScroll();
+        tl.eventCallback("onReverseComplete", null);
+      });
+      tl.timeScale(1).reverse();
+    } else {
+      performScroll();
     }
   });
 });
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
   const hash = window.location.hash;
   const smoother2 = getSmoother();
-  if (hash && smoother2) {
-    window.scrollTo(0, 0);
-    smoother2.scrollTop(0);
+  if (hash) {
     const scrollToHash = () => {
       const target = document.querySelector(hash);
       if (target) {
-        smoother2.scrollTo(target, {
-          duration: 1.5,
-          ease: "power4.out"
-        });
+        if (smoother2 && !isMobile()) {
+          smoother2.scrollTo(target, {
+            duration: 1.5,
+            ease: "power4.out"
+          });
+        } else {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
         revealHiddenContent(target);
       } else if (scrollToHash.tryCount < 10) {
         scrollToHash.tryCount++;
@@ -183,6 +217,9 @@ window.addEventListener("DOMContentLoaded", () => {
     setTimeout(scrollToHash, 300);
   }
 });
+function isMobile() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
 gsap.to(".p-hero__background", {
   backgroundColor: "rgba(188, 186, 186, 0.63)",
   duration: 3,
@@ -200,29 +237,53 @@ gsap.fromTo("#js-title-hero", {
   autoAlpha: 1
 });
 document.addEventListener("DOMContentLoaded", function() {
+  let isChecking = false;
   function onScroll() {
-    document.querySelectorAll(".p-slide__in").forEach(function(element) {
-      const sectionTop = element.getBoundingClientRect().top + window.scrollY;
-      const windowBottom = window.scrollY + window.innerHeight;
-      if (element.classList.contains("is-animated")) return;
-      if (windowBottom > sectionTop + 100) {
-        console.log("アニメーション実行", element);
-        gsap.to(
-          element,
-          {
-            y: 0,
-            delay: 0.5,
-            duration: 2,
-            autoAlpha: 1,
-            ease: "power4.out"
-          }
-        );
-        element.classList.add("is-animated");
-      }
+    if (isChecking) return;
+    isChecking = true;
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".p-slide__in").forEach(function(element) {
+        if (element.classList.contains("is-animated")) return;
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 100) {
+          console.log("アニメーション実行", element);
+          gsap.to(
+            element,
+            {
+              y: 0,
+              delay: 0.2,
+              duration: 1.5,
+              autoAlpha: 1,
+              ease: "power4.out"
+            }
+          );
+          element.classList.add("is-animated");
+        }
+      });
+      isChecking = false;
     });
   }
-  onScroll();
-  window.addEventListener("scroll", onScroll);
+  setTimeout(onScroll, 500);
+  const smoother2 = ScrollSmoother.get();
+  if (smoother2) {
+    const smoothContent = document.querySelector("#smooth-content");
+    if (smoothContent) {
+      smoothContent.addEventListener("scroll", onScroll, { passive: true });
+    }
+    ScrollTrigger.create({
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: onScroll,
+      onRefresh: onScroll
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("touchend", onScroll, { passive: true });
+  window.addEventListener("touchmove", onScroll, { passive: true });
+  window.addEventListener("touchstart", () => setTimeout(onScroll, 50), { passive: true });
+  setInterval(onScroll, 300);
 });
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded 発火！");

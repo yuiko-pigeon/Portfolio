@@ -154,6 +154,18 @@ function modify_menu_item_output($item_output, $item, $depth, $args) {
 }
 add_filter('walker_nav_menu_start_el', 'modify_menu_item_output', 10, 4);
 
+// hamburgerメニューのliタグにクラスを追加
+function add_hamburgermenu_li_class($classes, $item, $args, $depth) {
+
+    if (is_object($args) && isset($args->theme_location) && $args->theme_location === 'hamburger') {
+        if ($depth == 0) {
+            $classes[] = 'p-menu__list';
+        }
+    }
+   return $classes;
+}
+add_filter('nav_menu_css_class','add_hamburgermenu_li_class', 10, 4);//nav_menu_css_classはliタグにclass名追加
+
 //hamburgerメニューのaタグにクラスを追加
 function add_menu_link_class($atts, $item, $args,$depth) {
     
