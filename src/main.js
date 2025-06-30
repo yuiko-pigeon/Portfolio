@@ -32,13 +32,6 @@ console.log('scrollFix:', scrollFix);
 
 let menuOpen = false;
 
-  // GSAPタイムライン  
-  // const hamburgerTl = gsap.timeline({ paused: true });
-  // if (hamburger) {
-  //   hamburger.style.display = 'block'; // ハンバーガーボタン強制
-  //   hamburgerTl.to(hamburger, { borderRadius: 0, duration: 0.3 });
-  // }
-
 //ScrollSmootherの初期化: 内包を指定
 const wrapper = document.querySelector('#smooth-wrapper');
 const content = document.querySelector('#smooth-content');
@@ -213,27 +206,36 @@ gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
     const smoother = getSmoother();
 
     const performScroll = () => {
-      target.style.visibility = 'hidden';
-
+      const isSp = isMobile();
+    
+      if (isSp) {
+        // スマホだけ非表示にする
+        target.style.visibility = 'hidden';
+      }
+    
       const scrollDone = () => {
-        target.style.visibility = '';
+        if (isSp) {
+          target.style.visibility = '';
+        }
         revealHiddenContent(target);
       };
-
-      if (smoother && !isMobile()) {
+    
+      if (smoother && !isSp) {
+        // PC：ScrollSmoother
         smoother.scrollTo(target, {
           duration: 1.5,
           ease: 'power4.out',
-          onComplete: scrollDone
+          onComplete: scrollDone,
         });
       } else {
+        // スマホ or ScrollSmootherなし
         setTimeout(() => {
           target.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
           });
-          setTimeout(scrollDone, 900);
-        }, 100); // 少し遅らせる
+          setTimeout(scrollDone, 700); // ← ここで調整
+        }, 100);
       }
     };
 

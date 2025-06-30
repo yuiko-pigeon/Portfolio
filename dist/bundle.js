@@ -150,12 +150,17 @@ gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
     if (isMenuClosing) return;
     const smoother2 = getSmoother();
     const performScroll = () => {
-      target.style.visibility = "hidden";
+      const isSp = isMobile();
+      if (isSp) {
+        target.style.visibility = "hidden";
+      }
       const scrollDone = () => {
-        target.style.visibility = "";
+        if (isSp) {
+          target.style.visibility = "";
+        }
         revealHiddenContent(target);
       };
-      if (smoother2 && !isMobile()) {
+      if (smoother2 && !isSp) {
         smoother2.scrollTo(target, {
           duration: 1.5,
           ease: "power4.out",
@@ -167,7 +172,7 @@ gsap.utils.toArray('a[href^="#"], a[href*="/#"]').forEach((link) => {
             behavior: "smooth",
             block: "start"
           });
-          setTimeout(scrollDone, 900);
+          setTimeout(scrollDone, 700);
         }, 100);
       }
     };
