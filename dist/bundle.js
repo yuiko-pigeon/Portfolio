@@ -89,6 +89,21 @@ if (hamburger && hamburgerClose && nav && closeButton) {
       }
     });
   });
+  window.addEventListener("resize", function() {
+    if (menuOpen) {
+      if (window.innerWidth >= 1200) {
+        nav.classList.remove("open");
+        fix.classList.remove("fix");
+        hamburger.style.borderRadius = "50%";
+        closeButton.classList.remove("is-appear");
+        tl.timeScale(1).reverse();
+        if (smoother) {
+          smoother.paused(false);
+        }
+        menuOpen = false;
+      }
+    }
+  });
 } else {
   console.warn("Hamburger menu elements not found, skipping menu functionality");
 }
@@ -225,6 +240,29 @@ window.addEventListener("load", () => {
 function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 }
+document.addEventListener("DOMContentLoaded", function() {
+  const isFrontPage = location.pathname === "/" || location.pathname === "/index.php";
+  const topLinks = document.querySelectorAll('a[href$="#top"]');
+  topLinks.forEach((link) => {
+    link.addEventListener("click", function(e) {
+      if (isFrontPage) {
+        e.preventDefault();
+        const topEl = document.getElementById("top");
+        if (topEl) {
+          smoother.scrollTo(topEl, true);
+        }
+      }
+    });
+  });
+  if (location.hash === "#top" && isFrontPage) {
+    setTimeout(() => {
+      const topEl = document.getElementById("top");
+      if (topEl) {
+        smoother.scrollTo(topEl, false);
+      }
+    }, 100);
+  }
+});
 gsap.to(".p-hero__background", {
   backgroundColor: "rgba(188, 186, 186, 0.63)",
   duration: 3,
@@ -295,40 +333,58 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalElement = document.querySelector(".p-modal__portfolio");
   const closedButton = document.querySelector(".p-modal__close");
   let swiperInstance = null;
+  let savedScrollPosition = 0;
   console.log("modalElement:", modalElement);
   console.log("closedButton:", closedButton);
   const portfolioDataList = [
     // hamburger (data-index="0")
     [
       {
-        img: "http://portfolio.local/wp-content/uploads/2025/06/hamburger.webp",
+        img: "https://andeight.net/wp-content/uploads/2025/06/hamburger.webp",
         title: "Hamburger(架空)"
       },
       {
-        img: "http://portfolio.local/wp-content/uploads/2025/06/hamburger-description.webp",
+        img: "https://andeight.net/wp-content/uploads/2025/06/hamburger-description.webp",
         title: "Hamburger(架空)の詳細"
       }
     ],
     // portfolio (data-index="1")
     [
       {
-        img: "http://portfolio.local/wp-content/uploads/2025/06/portfolio.webp",
+        img: "https://andeight.net/wp-content/uploads/2025/06/portfolio.webp",
         title: "Portfolio"
       },
       {
-        img: "http://portfolio.local/wp-content/uploads/2025/06/portfolio-description.webp",
+        img: "https://andeight.net/wp-content/uploads/2025/07/portfolio-description.webp",
         title: "Portfolioの詳細"
       }
     ]
   ];
+  function getHeaderHeight() {
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const isPC = window.innerWidth >= 1024;
+    const headerHeightRem = isPC ? 13 : 5;
+    return headerHeightRem * rootFontSize;
+  }
   function openModal(startIndex) {
-    console.log("モーダルを開く処理開始:", startIndex);
     if (!portfolioDataList[startIndex]) {
-      console.error("指定されたインデックスのデータが存在しません:", startIndex);
+      console.error("データが存在しません:", startIndex);
       return;
     }
+    const headerHeight = getHeaderHeight();
     const smoother2 = ScrollSmoother.get();
-    if (smoother2) smoother2.paused(true);
+    if (smoother2) {
+      savedScrollPosition = smoother2.scrollTop() + headerHeight;
+      smoother2.paused(true);
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${savedScrollPosition - headerHeight}px`;
+      document.body.style.width = "100%";
+    } else {
+      savedScrollPosition = window.scrollY + headerHeight;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${savedScrollPosition - headerHeight}px`;
+      document.body.style.width = "100%";
+    }
     const wrapper2 = document.querySelector(".swiper-wrapper");
     if (!wrapper2) {
       console.error("swiper-wrapper が見つかりません");
@@ -340,9 +396,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const slide = document.createElement("div");
       slide.classList.add("swiper-slide");
       slide.innerHTML = `
-          <img src="${data.img}" alt="${data.title}" style="width: 100%; height: auto;">
-          <h3 style="text-align: center; margin-top: 10px;">${data.title}</h3>
-        `;
+      <img src="${data.img}" alt="${data.title}" style="width: 100%; height: auto;">
+      <h3 style="text-align: center; margin-top: 10px;">${data.title}</h3>
+    `;
       wrapper2.appendChild(slide);
     });
     if (swiperInstance) {
@@ -351,26 +407,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     modalElement.classList.remove("is-close");
     modalElement.classList.add("is-open");
+    document.body.classList.add("modal-open");
     document.body.style.overflow = "hidden";
     setTimeout(() => {
       swiperInstance = new Swiper(".swiper", {
         loop: false,
         initialSlide: 0,
         mousewheel: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         slidesPerView: 1,
         autoHeight: true,
         preventInteractionOnTransition: true,
         on: {
           init: function() {
-            console.log("Swiper 初期化成功！");
             this.update();
             this.slideTo(0, 0);
           }
@@ -379,21 +429,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 50);
   }
   function closeModal() {
-    console.log("モーダルを閉じる処理開始");
+    document.body.style.overflow = "hidden";
+    const headerHeight = getHeaderHeight();
     modalElement.classList.remove("is-open");
-    document.body.style.overflow = "";
-    setTimeout(() => {
+    modalElement.classList.add("is-close");
+    document.body.classList.remove("modal-open");
+    const handleTransitionEnd = () => {
       if (swiperInstance) {
         swiperInstance.destroy(true, true);
         swiperInstance = null;
       }
       const wrapper2 = document.querySelector(".swiper-wrapper");
-      if (wrapper2) {
-        wrapper2.innerHTML = "";
-      }
+      if (wrapper2) wrapper2.innerHTML = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
       const smoother2 = ScrollSmoother.get();
-      if (smoother2) smoother2.paused(false);
-    }, 400);
+      const targetPosition = savedScrollPosition - headerHeight;
+      if (smoother2) {
+        smoother2.paused(false);
+        smoother2.scrollTo(targetPosition, false);
+      } else {
+        window.scrollTo({ top: targetPosition, behavior: "instant" });
+      }
+      document.body.style.overflow = "";
+      modalElement.classList.remove("is-close");
+      modalElement.removeEventListener("transitionend", handleTransitionEnd);
+    };
+    modalElement.addEventListener("transitionend", handleTransitionEnd, { once: true });
+    setTimeout(() => {
+      if (modalElement.classList.contains("is-close")) {
+        handleTransitionEnd();
+      }
+    }, 200);
   }
   document.querySelectorAll(".is-style-works-image img").forEach((item) => {
     console.log("クリックイベント登録:", item);

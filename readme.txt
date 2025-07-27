@@ -43,16 +43,16 @@ SCSS（Sass）でのFLOCSS設計、そしてVite + Node.js + npm を使って、
 
 - **Vite**  
   モダンなビルドツール。SCSSやJSのバンドルを高速に実行
-    Vite    | 7.0.0
+    Vite    | 6.3.5
 
 - **Node.js / npm**  
     ViteとSassのビルド環境構築用に使用
     Node.js | v22.15.0
-    npm     | 10.9.2
+    npm     | 11.4.2
 
 - **Swiper / GSAP**  
   スライダーやスクロールアニメーションを演出
-    Swiper  | 11.0.0
+    Swiper  | 11.2.8
     GSAP    | 3.13.0
 
 ---
@@ -227,3 +227,8 @@ npm run build
   "dev": "vite",
   "build": "vite build"
 }
+
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Twitter: @rich_clark

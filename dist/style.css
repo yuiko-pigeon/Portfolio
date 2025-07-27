@@ -165,7 +165,7 @@ input, select {
   width: 100%;
   box-sizing: border-box;
   position: fixed;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   min-height: 100vh;
   grid-template-rows: 5rem 1fr 1.5rem;
   grid-template-columns: 100%;
@@ -212,8 +212,13 @@ input, select {
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .c-title__contents--privacy {
-  font-size: clamp(0.8rem, 3vw, 6.2rem);
+  font-size: clamp(0.8rem, 4.5vw, 6.2rem);
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
+}
+@media screen and (min-width: 781px) {
+  .c-title__contents--privacy {
+    font-size: clamp(0.8rem, 3vw, 6.2rem);
+  }
 }
 .c-title__card {
   font-size: clamp(3.125rem, 4vw, 6.2rem);
@@ -968,8 +973,7 @@ input, select {
 }
 
 .smf-button-control {
-  width: 100%;
-  margin: 0 !important;
+  margin: 0 auto !important;
 }
 
 .smf-button-control__control[data-action=confirm] {
@@ -997,13 +1001,13 @@ input, select {
   display: flex !important;
   justify-content: center;
   width: auto !important;
-  margin: 2.5rem auto 1rem auto;
+  margin: 2.5rem auto 15rem auto;
   padding: 0.5rem 2rem;
   background-color: rgba(188, 186, 186, 0.55);
   color: #3E3E3E;
   font-size: 1rem;
   border: solid 1px rgba(112, 112, 112, 0.78) !important;
-  border-radius: 4px !important;
+  border-radius: 25px !important;
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
@@ -1012,11 +1016,6 @@ input, select {
   background-color: rgba(112, 112, 112, 0.231372549) !important;
   color: #1a1b1a !important;
   background-image: none;
-}
-@media screen and (min-width: 781px) {
-  .smf-button-control__control[data-action=complete] {
-    margin: 2.5rem auto 15rem 1rem;
-  }
 }
 
 .smf-button-control__control[data-action=back] {
@@ -1235,7 +1234,7 @@ input, select {
   grid-template-rows: 1fr 1fr;
   min-height: auto;
   font-weight: 400;
-  margin: 5rem auto;
+  margin: 5rem auto 0 auto;
 }
 @media screen and (min-width: 1200px) {
   .is-style-grid-profile {
@@ -1243,6 +1242,7 @@ input, select {
     grid-template-columns: 1fr 1fr !important;
     grid-template-rows: auto 1fr;
     row-gap: 5rem;
+    margin: 5rem auto;
   }
 }
 
@@ -1280,12 +1280,54 @@ input, select {
   }
 }
 
+.is-style-profile-skill {
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 3rem 12%;
+  line-height: 2.9rem;
+}
+@media screen and (min-width: 1200px) {
+  .is-style-profile-skill {
+    width: 100%;
+    margin: 0 auto 3rem;
+  }
+}
+.is-style-profile-skill > div {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 781px) {
+  .is-style-profile-skill > div {
+    width: 66%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .is-style-profile-skill > div {
+    width: auto;
+  }
+}
+.is-style-profile-skill > div > h2 {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+.is-style-profile-skill > div > ul {
+  margin: 1rem auto;
+}
+@media screen and (min-width: 1200px) {
+  .is-style-profile-skill > div > ul {
+    margin: 1rem;
+  }
+}
+
 .is-style-grid-profile-textarea-1 {
   grid-row: 2/3;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   text-align: left;
+  margin: 0 auto !important;
 }
 @media screen and (min-width: 1200px) {
   .is-style-grid-profile-textarea-1 {
@@ -1317,10 +1359,21 @@ input, select {
     line-height: 2.78rem;
   }
 }
+.is-style-grid-profile-textarea-2 > div {
+  justify-self: center;
+  text-align: left;
+}
+@media screen and (min-width: 1200px) {
+  .is-style-grid-profile-textarea-2 > div {
+    text-align: left;
+    justify-self: start;
+  }
+}
 
 .is-style-profile-text-2 {
   font-size: 1.3rem;
   margin: 5rem auto;
+  width: 95%;
 }
 @media screen and (min-width: 781px) {
   .is-style-profile-text-2 {
@@ -1356,6 +1409,11 @@ input, select {
 .is-style-profile-text-2 > a:active {
   color: #3E3E3E;
   text-decoration: none;
+}
+
+.wp-block-list > li > ul > li {
+  margin-left: 2rem;
+  list-style: none;
 }
 
 .is-style-line-height {
@@ -1701,13 +1759,13 @@ input, select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10rem 0;
+  padding-top: 18%;
   font-size: 2rem;
   font-family: "M PLUS 1p", Noto Sans JP, MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
 }
 .p-menu__list {
   color: #3E3E3E;
-  padding: 5.18rem 0;
+  padding: 2.2rem 0;
 }
 .p-menu__inner {
   position: relative;
@@ -1718,6 +1776,9 @@ input, select {
   .p-menu__inner {
     font-size: 1.5rem;
   }
+}
+.p-menu__contents {
+  height: 100dvh;
 }
 @media screen and (min-width: 1200px) {
   .p-menu {
@@ -1730,8 +1791,8 @@ input, select {
 }
 
 .p-grid {
-  display: grid;
-  grid-template-columns: 1fr !important;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   width: 89.3%;
   gap: 1.25rem;
@@ -1780,11 +1841,15 @@ input, select {
   justify-content: center;
 }
 
+.p-block {
+  padding-top: 50px;
+  margin-top: -50px;
+}
 @media screen and (min-width: 1200px) {
   .p-block__card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 85%;
+    width: 80%;
     margin: 0 auto;
   }
 }
@@ -1978,25 +2043,72 @@ input, select {
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .swiper-slide img {
-  width: 45.25% !important;
+  width: 80% !important;
   position: absolute;
   aspect-ratio: 1/1;
 }
-
-.swiper-button-next::after {
-  color: #FFFFFF !important;
+@media screen and (min-width: 1200px) {
+  .swiper-slide img {
+    width: 45.25% !important;
+  }
 }
 
+.swiper-button-next {
+  right: 0rem !important;
+}
+@media screen and (min-width: 1200px) {
+  .swiper-button-next {
+    right: 10px;
+  }
+}
+.swiper-button-next::after {
+  color: #FFFFFF !important;
+  font-size: 1.875rem !important;
+}
+@media screen and (min-width: 1200px) {
+  .swiper-button-next::after {
+    font-size: 2.75rem !important;
+  }
+}
+
+.swiper-button-prev {
+  left: 0rem !important;
+}
+@media screen and (min-width: 1200px) {
+  .swiper-button-prev {
+    left: 10px;
+  }
+}
 .swiper-button-prev::after {
   color: #FFFFFF !important;
+  font-size: 1.875rem !important;
+}
+@media screen and (min-width: 1200px) {
+  .swiper-button-prev::after {
+    font-size: 2.75rem !important;
+  }
 }
 
 .swiper-pagination-bullets {
+  bottom: 1.7% !important;
   position: absolute;
-  bottom: 22.7% !important;
+}
+@media screen and (min-width: 1200px) {
+  .swiper-pagination-bullets {
+    bottom: 22.7% !important;
+  }
 }
 .swiper-pagination-bullet {
   --swiper-theme-color: white;
+}
+
+.swiper-scrollbar {
+  display: none;
+}
+
+.swiper,
+.p-swiper {
+  touch-action: pan-x pan-y;
 }
 
 .p-slide__in {
@@ -2020,15 +2132,11 @@ input, select {
   align-items: center;
   z-index: 9999;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease;
   visibility: hidden;
   pointer-events: none;
-  /*&.is-close {
-    opacity: 0;
-    transform: scale(0.8);
-    visibility: hidden;
-    pointer-events: none;
-    }*/
+  overflow: hidden;
+  touch-action: none;
 }
 @media screen and (min-width: 1200px) {
   .p-modal__portfolio {
@@ -2040,6 +2148,13 @@ input, select {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  overflow: hidden;
+}
+.p-modal__portfolio.is-close {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease; /* 閉じる時: 200ms */
 }
 .p-modal__content {
   width: 100%;
@@ -2050,6 +2165,7 @@ input, select {
   position: relative;
   transform: scale(0.8);
   transition: transform 0.4s ease;
+  touch-action: pan-x pan-y;
 }
 .p-modal__portfolio.is-open .p-modal__content {
   transform: scale(1);
@@ -2057,7 +2173,7 @@ input, select {
 .p-modal__close {
   position: absolute;
   top: 0;
-  right: 3.44rem;
+  right: 0;
   font-size: clamp(4rem, 4.7vw, 20rem);
   width: 6.5rem;
   height: 10.5rem;
@@ -2069,7 +2185,7 @@ input, select {
 }
 @media screen and (min-width: 1200px) {
   .p-modal__close {
-    top: 5;
+    top: 0;
     right: 8.5rem;
   }
 }
@@ -2082,6 +2198,21 @@ input, select {
 }
 .js-open-modal:hover {
   transform: scale(1.08);
+}
+
+body.modal-open {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+#js-content {
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .p-title__hero {
@@ -2201,11 +2332,18 @@ input, select {
   min-height: 100vh;
   height: auto;
   overflow-y: auto;
+  will-change: transform;
 }
 @media screen and (min-width: 1200px) {
   #smooth-content {
     padding-top: 13rem;
   }
+}
+
+#smooth-wrapper {
+  /* スマホでの高さ設定 */
+  height: 100vh;
+  overflow: hidden;
 }
 
 .p-smooth__background {

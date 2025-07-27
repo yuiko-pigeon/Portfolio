@@ -51,6 +51,7 @@ if (wrapper && content) {
   console.warn('ScrollSmoother elements(#js-wrapper or .js-fix.content-wrapper) not found, skipping initialization');
 }
 
+
   // ハンバーガーメニュー
 if (hamburger && hamburgerClose && nav && closeButton) {
 tl.eventCallback("onComplete", () => {
@@ -112,6 +113,24 @@ menuClose.forEach(function(close){
     }
   });
 });
+
+window.addEventListener('resize', function() {
+  if(menuOpen){
+    // 1200px以上(PCサイズ）になった時だけ閉じる
+    if(window.innerWidth >= 1200) {
+      nav.classList.remove('open');
+      fix.classList.remove('fix');
+      hamburger.style.borderRadius = '50%';
+      closeButton.classList.remove('is-appear');
+      tl.timeScale(1).reverse();
+      if (smoother) {
+        smoother.paused(false);
+      }
+      menuOpen = false;
+    }
+  }
+});
+
 } else {
   console.warn('Hamburger menu elements not found, skipping menu functionality');
 }
@@ -299,6 +318,34 @@ function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  const isFrontPage = location.pathname === '/' || location.pathname === '/index.php';
+  const topLinks = document.querySelectorAll('a[href$="#top"]');
+
+  topLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+      if (isFrontPage) {
+        e.preventDefault();
+        const topEl = document.getElementById('top');
+        if (topEl) {
+          smoother.scrollTo(topEl, true); // true: スムーススクロール
+        }
+      }
+    });
+  });
+
+  // 遷移直後に #top が指定されている場合、強制的にScrollSmootherでスクロール
+  if (location.hash === '#top' && isFrontPage) {
+    setTimeout(() => {
+      const topEl = document.getElementById('top');
+      if (topEl) {
+        smoother.scrollTo(topEl, false); // 初期スクロールはアニメなしでも可
+      }
+    }, 100); // DOMとScrollSmootherの初期化完了を待つ
+  }
+});
+
+
 //gsap mainvisual
 gsap.to(".p-hero__background", { 
     backgroundColor: "rgba(188, 186, 186, 0.63)",
@@ -391,6 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalElement = document.querySelector('.p-modal__portfolio');
     const closedButton = document.querySelector('.p-modal__close');
     let swiperInstance = null;
+    let savedScrollPosition = 0; 
   
     console.log('modalElement:', modalElement);
     console.log('closedButton:', closedButton);
@@ -400,133 +448,171 @@ document.addEventListener("DOMContentLoaded", function () {
       // hamburger (data-index="0")
       [
         {
-          img: 'http://portfolio.local/wp-content/uploads/2025/06/hamburger.webp',
+          img: 'https://andeight.net/wp-content/uploads/2025/06/hamburger.webp',
           title: 'Hamburger(架空)',
         },
         {
-          img: 'http://portfolio.local/wp-content/uploads/2025/06/hamburger-description.webp',
+          img: 'https://andeight.net/wp-content/uploads/2025/06/hamburger-description.webp',
           title: 'Hamburger(架空)の詳細',
         },
       ],
       // portfolio (data-index="1")
       [
         {
-          img: 'http://portfolio.local/wp-content/uploads/2025/06/portfolio.webp',
+          img: 'https://andeight.net/wp-content/uploads/2025/06/portfolio.webp',
           title: 'Portfolio',
         },
         {
-          img: 'http://portfolio.local/wp-content/uploads/2025/06/portfolio-description.webp',
+          img: 'https://andeight.net/wp-content/uploads/2025/07/portfolio-description.webp',
           title: 'Portfolioの詳細',
         },
       ],
     ];
   
-    // =================================
-    // モーダルを開く処理
-    // =================================
-    function openModal(startIndex) {
-      console.log('モーダルを開く処理開始:', startIndex);
-      
-      // データが存在するかチェック
-      if (!portfolioDataList[startIndex]) {
-        console.error('指定されたインデックスのデータが存在しません:', startIndex);
-        return;
-      }
-  
-      // ScrollSmootherを停止
-      const smoother = ScrollSmoother.get();
-      if (smoother) smoother.paused(true);
-  
-      // スライドコンテンツを作成
-      const wrapper = document.querySelector('.swiper-wrapper');
-      if (!wrapper) {
-        console.error('swiper-wrapper が見つかりません');
-        return;
-      }
-      
-      wrapper.innerHTML = ''; // 前回分をクリア
-  
-      const portfolioData = portfolioDataList[startIndex];
-      portfolioData.forEach(data => {
-        const slide = document.createElement('div');
-        slide.classList.add('swiper-slide');
-        slide.innerHTML = `
-          <img src="${data.img}" alt="${data.title}" style="width: 100%; height: auto;">
-          <h3 style="text-align: center; margin-top: 10px;">${data.title}</h3>
-        `;
-        wrapper.appendChild(slide);
-      });
-  
-      // 既存のSwiperインスタンスを破棄
-      if (swiperInstance) {
-        swiperInstance.destroy(true, true);
-        swiperInstance = null;
-      }
-  
-      // モーダルを表示
-      modalElement.classList.remove('is-close'); // is-closeクラスを削除
-      modalElement.classList.add('is-open');
-      document.body.style.overflow = 'hidden'; // スクロール無効化
-  
-      // Swiperを初期化（少し遅延させる）
-      setTimeout(() => {
-        swiperInstance = new Swiper(".swiper", {
-          loop: false,
-          initialSlide: 0,
-          mousewheel: true,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-          },
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
-          slidesPerView: 1,
-          autoHeight: true,
-          preventInteractionOnTransition: true,
-          on: {
-            init: function() {
-              console.log('Swiper 初期化成功！');
-              this.update();
-              this.slideTo(0, 0);
-            },
-          },
-        });
-      }, 50); // 50ms後に初期化
+// ヘッダーの高さを取得する関数
+function getHeaderHeight() {
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const isPC = window.innerWidth >= 1024; // @include g.pc に合わせる
+  const headerHeightRem = isPC ? 13 : 5; // PC: 13rem, SP: 5rem
+  return headerHeightRem * rootFontSize;
+}
+
+// モーダルを開く処理
+function openModal(startIndex) {
+  if (!portfolioDataList[startIndex]) {
+    console.error('データが存在しません:', startIndex);
+    return;
+  }
+
+  // ヘッダーの高さを取得
+  const headerHeight = getHeaderHeight();
+
+  // スクロール位置を保存
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    savedScrollPosition = smoother.scrollTop() + headerHeight;
+    smoother.paused(true);
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollPosition - headerHeight}px`;
+    document.body.style.width = '100%';
+  } else {
+    savedScrollPosition = window.scrollY + headerHeight;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollPosition - headerHeight}px`;
+    document.body.style.width = '100%';
+  }
+
+  const wrapper = document.querySelector('.swiper-wrapper');
+  if (!wrapper) {
+    console.error('swiper-wrapper が見つかりません');
+    return;
+  }
+
+  wrapper.innerHTML = ''; // 前回分をクリア
+  const portfolioData = portfolioDataList[startIndex];
+  portfolioData.forEach(data => {
+    const slide = document.createElement('div');
+    slide.classList.add('swiper-slide');
+    slide.innerHTML = `
+      <img src="${data.img}" alt="${data.title}" style="width: 100%; height: auto;">
+      <h3 style="text-align: center; margin-top: 10px;">${data.title}</h3>
+    `;
+    wrapper.appendChild(slide);
+  });
+
+  // Swiperインスタンスを破棄
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+    swiperInstance = null;
+  }
+
+  // モーダルを表示
+  modalElement.classList.remove('is-close');
+  modalElement.classList.add('is-open');
+  document.body.classList.add('modal-open');
+  document.body.style.overflow = 'hidden';
+
+  // Swiperを初期化
+  setTimeout(() => {
+    swiperInstance = new Swiper(".swiper", {
+      loop: false,
+      initialSlide: 0,
+      mousewheel: true,
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      slidesPerView: 1,
+      autoHeight: true,
+      preventInteractionOnTransition: true,
+      on: {
+        init: function () {
+          this.update();
+          this.slideTo(0, 0);
+        },
+      },
+    });
+  }, 50);
+}
+
+// モーダルを閉じる処理
+function closeModal() {
+  // スクロールを一時無効化
+  document.body.style.overflow = 'hidden';
+
+  // ヘッダーの高さを取得
+  const headerHeight = getHeaderHeight();
+
+  // モーダルを非表示
+  modalElement.classList.remove('is-open');
+  modalElement.classList.add('is-close');
+  document.body.classList.remove('modal-open');
+
+  // トランジション完了を検知
+  const handleTransitionEnd = () => {
+    // Swiperインスタンスを破棄
+    if (swiperInstance) {
+      swiperInstance.destroy(true, true);
+      swiperInstance = null;
     }
-  
-    // =================================
-    // モーダルを閉じる処理
-    // =================================
-    function closeModal() {
-      console.log('モーダルを閉じる処理開始');
-      
-      // モーダルを非表示
-      modalElement.classList.remove('is-open');
-      document.body.style.overflow = ''; // スクロール有効化
-  
-      // アニメーション完了後にクリーンアップ
-      setTimeout(() => {
-        // Swiperインスタンスを破棄
-        if (swiperInstance) {
-          swiperInstance.destroy(true, true);
-          swiperInstance = null;
-        }
-        
-        // スライドコンテンツをクリア
-        const wrapper = document.querySelector('.swiper-wrapper');
-        if (wrapper) {
-          wrapper.innerHTML = '';
-        }
-        
-        // ScrollSmootherを再開
-        const smoother = ScrollSmoother.get();
-        if (smoother) smoother.paused(false);
-        
-      }, 400); // CSSのtransition時間と合わせる
+
+    // スライドコンテンツをクリア
+    const wrapper = document.querySelector('.swiper-wrapper');
+    if (wrapper) wrapper.innerHTML = '';
+
+    // bodyの固定を解除
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+
+    // スクロール位置を復元
+    const smoother = ScrollSmoother.get();
+    const targetPosition = savedScrollPosition - headerHeight;
+    if (smoother) {
+      smoother.paused(false);
+      smoother.scrollTo(targetPosition, false);
+    } else {
+      window.scrollTo({ top: targetPosition, behavior: 'instant' });
     }
-  
+
+    // スクロールを有効化
+    document.body.style.overflow = '';
+
+    // is-closeクラスを削除
+    modalElement.classList.remove('is-close');
+
+    // イベントリスナーを削除
+    modalElement.removeEventListener('transitionend', handleTransitionEnd);
+  };
+
+  // トランジションイベントを登録
+  modalElement.addEventListener('transitionend', handleTransitionEnd, { once: true });
+
+  // フォールバック（閉じるアニメーション用に200ms）
+  setTimeout(() => {
+    if (modalElement.classList.contains('is-close')) {
+      handleTransitionEnd();
+    }
+  }, 200);
+}
     // =================================
     // イベントリスナーの設定
     // =================================

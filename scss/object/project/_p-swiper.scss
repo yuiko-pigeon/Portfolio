@@ -53,29 +53,59 @@
     aspect-ratio: 1/1;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     img {
-      width: 45.25% !important;
+      width: 80% !important;
       position: absolute;
       aspect-ratio: 1/1;
+      @include g.pc {
+        width: 45.25% !important;
+      }
     }
   }
   .swiper-button-next{
+    right: 0rem !important;
+    @include g.pc{
+      right: 10px;
+    }
     &::after{
       color: g.$color-white !important;
+      font-size: 1.875rem !important;
+      @include g.pc{
+        font-size: 2.75rem !important;
+      }
     }
   }
   .swiper-button-prev{
+    left: 0rem !important;
+    @include g.pc{
+      left: 10px;
+    }
     &::after{
       color: g.$color-white !important;
+      font-size: 1.875rem !important;
+      @include g.pc{
+        font-size: 2.75rem !important;
+      }
     }
   }
   .swiper-pagination{
     &-bullets{
+      bottom: 1.7% !important;
       position: absolute;
-      bottom: 22.7% !important;
+      @include g.pc{
+        bottom: 22.7% !important;
+      }
     }
     &-bullet{
       --swiper-theme-color: white;
     }
   }
+
+  .swiper-scrollbar{
+    display: none ;
+  }
   
-  
+  // Swiperでのタッチ操作を許可
+.swiper,
+.p-swiper {
+  touch-action: pan-x pan-y;
+}

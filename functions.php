@@ -22,6 +22,7 @@ function my_enqueue_assets(){
     wp_enqueue_script('scrollsmoother', get_theme_file_uri('js/ScrollSmoother.min.js'), array('gsap','scrolltrigger'), '3.13.0', true);
     wp_enqueue_script('main',get_theme_file_uri('dist/bundle.js'),array('swiper', 'gsap', 'scrolltrigger', 'scrollsmoother', 'scrolltoplugin'),'1.0.0',true);
     // wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
+    
 
     wp_localize_script('main', 'wpData', [
         'isFrontPage' => is_front_page()
@@ -315,6 +316,13 @@ function custom_block_styles() {
     );
     register_block_style(
         'core/group', // ブロック名
+        array(
+            'name'         => 'profile-skill', // スタイル名
+            'label'        => 'プロフィールスキル', // スタイルの表示名
+        )
+    );
+    register_block_style(
+        'core/group', // ブロック名s
         array(
             'name'         => 'grid-works', // スタイル名
             'label'        => 'works大枠のグリッド', // スタイルの表示名
