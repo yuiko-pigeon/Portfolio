@@ -67,6 +67,13 @@ SCSS（Sass）でのFLOCSS設計、そしてVite + Node.js + npm を使って、
 
 ---
 
+### フォント
+
+ロゴに使用フォント
+Putung：Copyright (c) 2025 Khurasan. All rights reserved.
+Alucky：Copyright (c) 2025 Khurasan. All rights reserved.
+
+
 ##  ディレクトリ構成
     portfolio                                   
     ├─ css                                      

@@ -2000,6 +2000,7 @@ input, select {
   justify-content: center;
   align-items: center;
   margin: 0;
+  position: relative;
 }
 .p-swiper__wrapper {
   /* wrapperのサイズを調整 */
@@ -2039,20 +2040,15 @@ input, select {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1/1;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .swiper-slide img {
   width: 80% !important;
+  max-width: 90vw;
+  max-height: 70vh;
   position: absolute;
-  aspect-ratio: 1/1;
+  object-fit: contain;
 }
-@media screen and (min-width: 1200px) {
-  .swiper-slide img {
-    width: 45.25% !important;
-  }
-}
-
 .swiper-button-next {
   right: 0rem !important;
 }
@@ -2090,12 +2086,13 @@ input, select {
 }
 
 .swiper-pagination-bullets {
-  bottom: 1.7% !important;
-  position: absolute;
+  bottom: 7.7% !important;
+  position: fixed;
 }
 @media screen and (min-width: 1200px) {
   .swiper-pagination-bullets {
-    bottom: 22.7% !important;
+    bottom: 11.7% !important;
+    position: fixed;
   }
 }
 .swiper-pagination-bullet {
@@ -2109,6 +2106,10 @@ input, select {
 .swiper,
 .p-swiper {
   touch-action: pan-x pan-y;
+}
+
+.swiper-autoheight, .swiper-autoheight .swiper-slide {
+  height: 100vh !important;
 }
 
 .p-slide__in {
@@ -2166,6 +2167,13 @@ input, select {
   transform: scale(0.8);
   transition: transform 0.4s ease;
   touch-action: pan-x pan-y;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 1200px) {
+  .p-modal__content {
+    padding: 3rem 2rem;
+  }
 }
 .p-modal__portfolio.is-open .p-modal__content {
   transform: scale(1);

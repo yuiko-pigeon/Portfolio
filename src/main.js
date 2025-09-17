@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log('DOMContentLoaded 発火！');
     
 
-    // 要素の取得
+    // モーダル要素の取得
     const modalElement = document.querySelector('.p-modal__portfolio');
     const closedButton = document.querySelector('.p-modal__close');
     let swiperInstance = null;
@@ -445,7 +445,18 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // モーダルデータ
     const portfolioDataList = [
-      // hamburger (data-index="0")
+      // cocohome (data-index="0")
+      [
+        {
+          img: 'https://andeight.net/wp-content/uploads/2025/06/cocohome.webp',
+          title: '株式会社ココホーム様',
+        },
+        {
+          img: 'https://andeight.net/wp-content/uploads/2025/06/cocohome-description.webp',
+          title: '株式会社ココホーム様の詳細',
+        },
+      ],
+      // hamburger (data-index="1")
       [
         {
           img: 'https://andeight.net/wp-content/uploads/2025/06/hamburger.webp',
@@ -456,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
           title: 'Hamburger(架空)の詳細',
         },
       ],
-      // portfolio (data-index="1")
+      // portfolio (data-index="2")
       [
         {
           img: 'https://andeight.net/wp-content/uploads/2025/06/portfolio.webp',

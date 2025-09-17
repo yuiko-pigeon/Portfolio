@@ -7,13 +7,25 @@
     <meta name="description" content="<?php bloginfo('description'); ?>">
     <meta name="keywords" content="Web制作, フリーランス, WordPress, ホームページ, サイト, コーディング, 名古屋, コーディング, ワードプレス, 安い, 丁寧, 安心">
     <meta property="og:site_name" content="And 8" />
-    <meta property="og:title" content="フリーランスとしてコーディングをしているyuikoのポートフォリオサイト" />
+    <meta property="og:title" content="愛知を中心にフリーランスとしてコーディングをしているAnd 8 -yuiko miyano- のwebサイト" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://andeight.net/" />
     <meta property="og:image" content="https://andeight.net/wp-content/uploads/2025/07/screenshotogp.png" />
+    <meta property="og:image:width" content="1196" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="And 8 - フリーランスWeb制作ポートフォリオ" />
     <meta property="og:description" content="使いやすいサイトをリーズナブルにご提供。フリーランスだからこそ実現します。名古屋を拠点に全国のお客様へWebサイトをお作りします。お気軽にお問い合わせフォームよりご相談ください。" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://andeight.net/wp-content/uploads/2025/07/screenshotogp.png" />
+    <meta name="twitter:image:alt" content="And 8 - フリーランスWeb制作ポートフォリオ" />
     <meta name="twitter:site" content="@y_coder_and8" />
+    <meta name="twitter:creator" content="@y_coder_and8" />
+    <meta name="x:card" content="summary_large_image" />
+    <meta name="x:image" content="https://andeight.net/wp-content/uploads/2025/07/screenshotogp.png" />
+    <meta name="x:image:alt" content="And 8 - フリーランスWeb制作ポートフォリオ" />
+    <meta name="x:site" content="@y_coder_and8" />
+    <meta name="x:creator" content="@y_coder_and8" />
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> class="js-fix" >
